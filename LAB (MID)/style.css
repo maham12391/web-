@@ -1,3 +1,4 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -9,13 +10,15 @@ body {
     background-color: #f4f4f4;
 }
 
+/* --- UPDATED: Container is now fluid for mobile --- */
 .container {
     width: 95%; 
     max-width: 1100px;
     margin: 0 auto;
 }
 
-.top-orange-bar {
+/* Yellow Top Bar */
+.top-yellow-bar {
     background-color: #f85606;
     color: white;
     padding: 8px 0;
@@ -28,6 +31,7 @@ body {
     gap: 20px;
 }
 
+/* White Header */
 .main-header {
     background-color: white;
     padding: 20px 0;
@@ -69,6 +73,7 @@ body {
     border-radius: 0 2px 2px 0;
 }
 
+/* Professional Cart Icon CSS */
 .cart-container {
     display: flex;
     align-items: center;
@@ -102,6 +107,7 @@ body {
     font-weight: 500;
 }
 
+/* Banners */
 .banners {
     margin-top: 20px;
 }
@@ -112,53 +118,21 @@ body {
     margin-bottom: 10px;
 }
 
+/* Product Grid */
 .section-title {
     margin: 30px 0 15px 0;
 }
 
-/* =========================================
-   CAROUSEL OVERRIDES & CONTROLS
-   ========================================= */
-.carousel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 30px 0 15px 0;
-}
-
-.carousel-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.carousel-controls button {
-    background: #f85606;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.carousel-controls button:hover {
-    background: #d84a05;
-}
-
-.slide-counter {
-    font-size: 14px;
-    font-weight: 600;
-    color: #333;
-}
-
 .product-grid {
-    display: block; /* Overridden from flex to block so Slick works */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .card {
     background: white;
-    margin: 0 5px; /* Keeps the gap between slides */
+    /* Default: 6 items per row */
+    width: calc(16.66% - 9px); 
     border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
@@ -193,10 +167,6 @@ body {
     font-weight: bold;
 }
 
-.slick-slide:focus, .slick-slide a {
-    outline: none; /* Removes the blue outline when clicking slider */
-}
-
 /* Footer */
 .footer {
     background-color: #2e2e2e;
@@ -210,6 +180,52 @@ body {
     margin-bottom: 15px;
 }
 
+/* =========================================
+   NEW: RESPONSIVE MEDIA QUERIES
+   ========================================= */
+
+/* Tablet and Mobile View (768px and below) */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .top-links {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* Change to 2 cards per row on mobile */
+    .card {
+        width: calc(50% - 5px);
+    }
+
+    .card img {
+        height: 150px;
+    }
+}
+
+/* Extra Small Phones (480px and below) */
+@media (max-width: 480px) {
+    .logo {
+        font-size: 24px;
+    }
+
+    .top-yellow-bar {
+        display: none; /* Hide top bar on tiny screens for cleaner look */
+    }
+
+    /* Stack footer links */
+    .footer-links span {
+        display: block;
+        margin: 5px 0;
+    }
+}
 /* NAVIGATION BAR */
 .category-nav {
     background-color: #fff;
@@ -269,26 +285,8 @@ body {
     color: white;
 }
 
-/* =========================================
-   RESPONSIVE MEDIA QUERIES
-   ========================================= */
-
-/* Tablet and Mobile View (768px and below) */
+/* Mobile */
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .search-box {
-        width: 100%;
-    }
-
-    .top-links {
-        justify-content: center;
-        gap: 10px;
-    }
-
     .nav-toggle {
         display: block;
     }
@@ -307,25 +305,5 @@ body {
 
     .nav-links li a {
         border-bottom: 1px solid #f5f5f5;
-    }
-    
-    .card img {
-        height: 150px;
-    }
-}
-
-/* Extra Small Phones (480px and below) */
-@media (max-width: 480px) {
-    .logo {
-        font-size: 24px;
-    }
-
-    .top-yellow-bar, .top-orange-bar {
-        display: none; 
-    }
-
-    .footer-links span {
-        display: block;
-        margin: 5px 0;
     }
 }
