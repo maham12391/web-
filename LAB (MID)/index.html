@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daraz Clone</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -32,126 +33,79 @@
             </div>
         </div>
     </header>
-    <!-- NAVIGATION BAR -->
-<nav class="category-nav">
-    <div class="container">
-        <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')">☰ Categories</button>
-        <ul class="nav-links">
-            <li><a href="#">Flash Deals</a></li>
-            <li><a href="#">Mobiles & Tablets</a></li>
-            <li><a href="#">Fashion</a></li>
-            <li><a href="#">Electronics</a></li>
-            <li><a href="#">Home & Living</a></li>
-            <li><a href="#">Health & Beauty</a></li>
-            <li><a href="#">Sports & Travel</a></li>
-            <li><a href="#">Groceries</a></li>
-            <li><a href="#" class="nav-sale">⚡ Super Sale</a></li>
-        </ul>
-    </div>
-</nav>
 
     <main class="container">
         <section class="banners">
-            <img src="mega deals.avif" alt="Mega Deals" class="hero-img">
-            <img src="Summer sale.webp" alt="Summer Sale" class="hero-img">
+            <img src="Mega Deals.avif" alt="Mega Deals" class="hero-img">
+            <img src="Summer sale.webp" alt="Summer Sale" class="hero-img summer-banner">
         </section>
 
         <h2 class="section-title">Just For You</h2>
-        <div class="product-grid">
-            
-            <div class="card">
-                <img src="Shoes.avif">
-                <div class="card-info">
-                    <p class="name">Casual Sneakers</p>
-                    <p class="price">Rs. 1,450</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="T shirt.avif">
-                <div class="card-info">
-                    <p class="name">Cotton T-Shirt</p>
-                    <p class="price">Rs. 750</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="Shampoo.avif">
-                <div class="card-info">
-                    <p class="name">LOREAL Shampoo</p>
-                    <p class="price">Rs. 850</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="Hair Straightener.avif">
-                <div class="card-info">
-                    <p class="name">Hair Straightener</p>
-                    <p class="price">Rs. 1,800</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="Slippers.avif">
-                <div class="card-info">
-                    <p class="name">Home Slippers</p>
-                    <p class="price">Rs. 399</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="perfume.avif">
-                <div class="card-info">
-                    <p class="name">Men's Perfume</p>
-                    <p class="price">Rs. 3,200</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="Star Clips.jpg_.avif">
-                <div class="card-info">
-                    <p class="name">Golden Star Hair Clips</p>
-                    <p class="price">Rs. 150</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="Trending heels.avif">
-                <div class="card-info">
-                    <p class="name">Trending Summer Heels</p>
-                    <p class="price">Rs. 2,100</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="shampo2.avif">
-                <div class="card-info">
-                    <p class="name">Dove Shampoo</p>
-                    <p class="price">Rs. 650</p>
-                </div>
-            </div>
-
+        
+        <div class="product-grid" id="product-container">
+            <p>Loading deals...</p>
         </div>
     </main>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
-                <span>Customer Care</span> | 
-                <span>Contact Us</span> | 
-                <span>Terms & Conditions</span> | 
-                <span>Privacy Policy</span>
+                <span>Customer Care</span> | <span>Contact Us</span> | <span>Terms & Conditions</span>
             </div>
             <p>&copy; 2026 Daraz Online Shopping</p>
         </div>
     </footer>
-    <script>
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            document.querySelector('.nav-links').classList.remove('open');
-        });
-    });
-</script>
 
+    <div id="quickViewModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title"></h2>
+            <hr>
+            <p id="modal-desc"></p>
+            <p class="rating-box">Rating: <span id="modal-rating"></span> / 5 ⭐</p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Task: AJAX Integration
+            $.ajax({
+                url: 'https://fakestoreapi.com/products?limit=4',
+                method: 'GET',
+                success: function(response) {
+                    const container = $('#product-container');
+                    container.empty(); // Task: DOM Manipulation
+
+                    response.forEach(product => {
+                        const cardHTML = `
+                            <div class="card">
+                                <img src="${product.image}" alt="Product">
+                                <div class="card-info">
+                                    <p class="name">${product.title}</p>
+                                    <p class="price">Rs. ${Math.round(product.price * 280)}</p>
+                                    <button class="quick-btn" 
+                                        data-title="${product.title}" 
+                                        data-desc="${product.description}" 
+                                        data-rate="${product.rating.rate}">
+                                        Quick View
+                                    </button>
+                                </div>
+                            </div>`;
+                        container.append(cardHTML);
+                    });
+                }
+            });
+
+            // Task: Interaction (Modal)
+            $(document).on('click', '.quick-btn', function() {
+                $('#modal-title').text($(this).data('title'));
+                $('#modal-desc').text($(this).data('desc'));
+                $('#modal-rating').text($(this).data('rate'));
+                $('#quickViewModal').fadeIn(200).css('display', 'flex');
+            });
+
+            $('.close-btn').click(function() { $('#quickViewModal').fadeOut(200); });
+        });
+    </script>
 </body>
 </html>
