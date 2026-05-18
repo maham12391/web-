@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Admin Panel</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f7;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .admin-sidebar {
+            width: 250px;
+            background-color: #1e1e24;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .admin-sidebar h2 {
+            font-size: 20px;
+            color: #f85606;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        .admin-sidebar a {
+            color: #ccc;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .admin-sidebar a:hover {
+            background-color: #f85606;
+            color: #fff;
+        }
+        .admin-main {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            max-width: 600px;
+        }
+        h1 {
+            margin: 0 0 20px 0;
+            font-size: 28px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #f85606;
+        }
+        .btn-submit {
+            background-color: #f85606;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+        .btn-cancel {
+            background-color: #eee;
+            color: #333;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .btn-cancel:hover {
+            background-color: #ddd;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .flash-error {
+            background-color: #fde0dc;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .current-image {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #fafafa;
+            padding: 10px;
+            border: 1px dashed #ccc;
+            border-radius: 4px;
+        }
+        .current-image img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-sidebar">
+        <h2>Daraz Admin</h2>
+        <a href="/admin">📦 Product Inventory</a>
+        <a href="/">🛒 View Storefront</a>
+        <a href="/logout">🚪 Logout</a>
+    </div>
+
+    <div class="admin-main">
+        <% if (error && error.length > 0) { %>
+            <div class="flash-error"><%= error %></div>
+        <% } %>
+
+        <h1>Edit Product</h1>
+
+        <div class="form-container">
+            <form action="/admin/products/<%= product._id %>/edit" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Product Name *</label>
+                    <input type="text" id="name" name="name" required value="<%= product.name %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required>
+                        <option value="Electronics" <%= product.category === 'Electronics' ? 'selected' : '' %>>Electronics</option>
+                        <option value="Fashion" <%= product.category === 'Fashion' ? 'selected' : '' %>>Fashion</option>
+                        <option value="Home" <%= product.category === 'Home' ? 'selected' : '' %>>Home</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price (Rs.) *</label>
+                    <input type="number" id="price" name="price" min="0" required value="<%= product.price %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock *</label>
+                    <input type="number" id="stock" name="stock" min="0" required value="<%= product.stock %>">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" rows="4" required><%= product.description %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Current Product Image</label>
+                    <div class="current-image">
+                        <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                        <div>
+                            <p style="margin: 0; font-size: 14px; color: #555;">Using existing image: <strong><%= product.imageUrl.split('/').pop() %></strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Upload New Image (Optional)</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn-submit">Save Changes</button>
+                    <a href="/admin" class="btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

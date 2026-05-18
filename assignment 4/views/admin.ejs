@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Daraz Clone</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f7;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .admin-sidebar {
+            width: 250px;
+            background-color: #1e1e24;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .admin-sidebar h2 {
+            font-size: 20px;
+            color: #f85606;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        .admin-sidebar a {
+            color: #ccc;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .admin-sidebar a:hover, .admin-sidebar a.active {
+            background-color: #f85606;
+            color: #fff;
+        }
+        .admin-main {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #333;
+        }
+        .btn-primary {
+            background-color: #f85606;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .admin-table th, .admin-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .admin-table th {
+            background-color: #fafafa;
+            font-weight: 600;
+            color: #666;
+        }
+        .admin-table td img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .badge-category {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+        .badge-stock {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+        }
+        .badge-low-stock {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-edit {
+            background-color: #ffb300;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .btn-delete {
+            background-color: #d32f2f;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .flash-msg {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .flash-success {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+        }
+        .flash-error {
+            background-color: #fde0dc;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-sidebar">
+        <h2>Daraz Admin</h2>
+        <a href="/admin" class="active">📦 Product Inventory</a>
+        <a href="/">🛒 View Storefront</a>
+        <a href="/logout">🚪 Logout</a>
+    </div>
+
+    <div class="admin-main">
+        <% if (success && success.length > 0) { %>
+            <div class="flash-msg flash-success"><%= success %></div>
+        <% } %>
+        <% if (error && error.length > 0) { %>
+            <div class="flash-msg flash-error"><%= error %></div>
+        <% } %>
+
+        <div class="admin-header">
+            <h1>Product Inventory Management</h1>
+            <a href="/admin/products/new" class="btn-primary">+ Add New Product</a>
+        </div>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (products.length === 0) { %>
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #999;">No products found in the inventory.</td>
+                    </tr>
+                <% } else { %>
+                    <% products.forEach(product => { %>
+                        <tr>
+                            <td>
+                                <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                            </td>
+                            <td style="font-weight: bold;"><%= product.name %></td>
+                            <td>
+                                <span class="badge badge-category"><%= product.category || 'N/A' %></span>
+                            </td>
+                            <td style="color: #f85606; font-weight: bold;">Rs. <%= product.price.toLocaleString() %></td>
+                            <td>
+                                <% if (product.stock > 10) { %>
+                                    <span class="badge badge-stock"><%= product.stock %> in stock</span>
+                                <% } else { %>
+                                    <span class="badge badge-low-stock">Low Stock: <%= product.stock %> left</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <div class="action-btns">
+                                    <a href="/admin/products/<%= product._id %>/edit" class="btn-edit">Edit</a>
+                                    <form action="/admin/products/<%= product._id %>/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this product? This action cannot be undone.');">
+                                        <button type="submit" class="btn-delete">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
