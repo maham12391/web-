@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Daraz Clone</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .checkout-container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .nav-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #f57224;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header" style="background-color: #f57224; padding: 10px 0;">
+        <div class="container navbar">
+            <div class="logo" style="color: white; font-size: 24px;"><a href="/" style="color: white; text-decoration: none;">Daraz</a></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="checkout-container">
+            <h2>Secure Checkout</h2>
+            <p>Welcome to checkout, <%= currentUser.name %>!</p>
+            <p>Since you are logged in, you can proceed with your payment.</p>
+            
+            <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+                <h3>Order Summary (Placeholder)</h3>
+                <p>1x Casual Sneakers - Rs. 1,450</p>
+                <p><strong>Total: Rs. 1,450</strong></p>
+                <button style="padding: 10px 20px; background-color: #388e3c; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; font-weight: bold;">Place Order</button>
+            </div>
+
+            <a href="/" class="nav-back">Back to Store</a>
+        </div>
+    </main>
+</body>
+</html>
