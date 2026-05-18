@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Daraz Clone</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .admin-dashboard {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .nav-back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header" style="background-color: #333; padding: 10px 0;">
+        <div class="container navbar">
+            <div class="logo" style="color: white; font-size: 24px;">Daraz Admin Panel</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="admin-dashboard">
+            <h2>Welcome to the Admin Dashboard</h2>
+            <p>Hello, <%= currentUser.name %>. You are logged in as an <strong><%= currentUser.role %></strong>.</p>
+            <p>Only users with the admin role can see this page.</p>
+            
+            <div style="margin-top: 30px;">
+                <h3>Dashboard Statistics (Placeholder)</h3>
+                <ul>
+                    <li>Total Users: 150</li>
+                    <li>Total Orders: 320</li>
+                    <li>Revenue: Rs. 450,000</li>
+                </ul>
+            </div>
+
+            <a href="/" class="nav-back">Back to Store</a>
+        </div>
+    </main>
+</body>
+</html>
