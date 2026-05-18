@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Daraz Clone</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Target styles specifically for the contact page elements */
+        .contact-wrapper {
+            margin: 40px auto;
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .contact-wrapper h2 {
+            color: #212121;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .contact-wrapper p {
+            color: #757575;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            border-color: #f85606;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #f85606;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #d04603;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-orange-bar">
+        <div class="container">
+            <div class="top-links">
+                <span>Become a Seller</span>
+                <span>Help & Support</span>
+                <% if (currentUser) { %>
+                    <a href="/checkout" style="color: white; text-decoration: none;">Checkout</a>
+                    <span>My Profile (<%= currentUser.name %>)</span>
+                    <a href="/logout" style="color: white; text-decoration: none;">Logout</a>
+                    <% if (currentUser.role === 'admin') { %>
+                        <a href="/admin" style="color: white; text-decoration: none; font-weight: bold;">Admin Panel</a>
+                    <% } %>
+                <% } else { %>
+                    <a href="/login" style="color: white; text-decoration: none;">Login</a>
+                    <a href="/register" style="color: white; text-decoration: none;">Sign Up</a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 10px;">
+        <% if (error && error.length > 0) { %>
+            <div style="color: #d32f2f; background-color: #fde0dc; padding: 10px; border-radius: 4px; margin-bottom: 10px;"><%= error %></div>
+        <% } %>
+        <% if (success && success.length > 0) { %>
+            <div style="color: #388e3c; background-color: #e8f5e9; padding: 10px; border-radius: 4px; margin-bottom: 10px;"><%= success %></div>
+        <% } %>
+    </div>
+
+    <header class="main-header">
+        <div class="container navbar">
+            <div class="logo" onclick="window.location.href='/'">Daraz</div>
+            <div class="search-box">
+                <input type="text" placeholder="Search in Daraz">
+                <button>Search</button>
+            </div>
+            <div class="cart-container">
+                <div class="cart-icon-css"></div>
+                <span class="cart-text">Cart</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="category-nav">
+        <div class="container">
+            <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')">☰ Categories</button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Flash Deals</a></li>
+                <li><a href="#">Mobiles & Tablets</a></li>
+                <li><a href="#">Fashion</a></li>
+                <li><a href="#">Electronics</a></li>
+                <li><a href="#">Health & Beauty</a></li>
+                <li><a href="#" class="nav-sale">⚡ Super Sale</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="contact-wrapper">
+            <h2>Contact Customer Care</h2>
+            <p>Have questions about your order or account? Drop us a message below and our support team will get back to you shortly.</p>
+            
+            <form action="#" method="POST" onsubmit="alert('Message Sent Successfully!'); return false;">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" placeholder="What can we help you with?" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message / Inquiry</label>
+                    <textarea id="message" placeholder="Type your message details here..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <span style="cursor:pointer;" onclick="window.location.href='/'">Customer Care</span> | 
+                <span style="cursor:pointer;" onclick="window.location.href='/contact'">Contact Us</span> | 
+                <span>Terms & Conditions</span> | 
+                <span>Privacy Policy</span>
+            </div>
+            <p>&copy; 2026 Daraz Online Shopping</p>
+        </div>
+    </footer>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
