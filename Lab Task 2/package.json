@@ -1,0 +1,17 @@
+{
+  "name": "labtask-2",
+  "version": "1.0.0",
+  "description": "My EJS and Express Assignment",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ejs": "^3.1.10"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "type": "commonjs"
+}
