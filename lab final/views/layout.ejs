@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Daraz Clone' %></title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="top-orange-bar">
+        <div class="container">
+            <div class="top-links">
+                <span>Become a Seller</span>
+                <span>Help & Support</span>
+                <% if (currentUser) { %>
+                    <a href="/checkout" style="color: white; text-decoration: none; margin-right: 10px;">Checkout</a>
+                    <span>My Profile (<%= currentUser.name %>)</span>
+                    <a href="/logout" style="color: white; text-decoration: none; margin-left: 10px;">Logout</a>
+                    <% if (currentUser.role === 'admin') { %>
+                        <a href="/admin" style="color: white; text-decoration: none; font-weight: bold; margin-left: 10px;">Admin Panel</a>
+                        <a href="/sales" style="color: white; text-decoration: none; font-weight: bold; margin-left: 10px;">Sales Dashboard</a>
+                    <% } %>
+                <% } else { %>
+                    <a href="/login" style="color: white; text-decoration: none; margin-right: 10px;">Login</a>
+                    <a href="/register" style="color: white; text-decoration: none;">Sign Up</a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 10px;">
+        <% if (locals.error && locals.error.length > 0) { %>
+            <div style="color: #d32f2f; background-color: #fde0dc; padding: 10px; border-radius: 4px; margin-bottom: 10px;"><%= error %></div>
+        <% } %>
+        <% if (locals.success && locals.success.length > 0) { %>
+            <div style="color: #388e3c; background-color: #e8f5e9; padding: 10px; border-radius: 4px; margin-bottom: 10px;"><%= success %></div>
+        <% } %>
+    </div>
+
+    <header class="main-header">
+        <div class="container navbar">
+            <div class="logo" onclick="window.location.href='/'" style="cursor: pointer;">Daraz</div>
+            <div class="search-box">
+                <input type="text" placeholder="Search in Daraz">
+                <button>Search</button>
+            </div>
+            <div class="cart-container">
+                <div class="cart-icon-css"></div>
+                <span class="cart-text">Cart</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="category-nav">
+        <div class="container">
+            <button class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')">☰ Categories</button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Flash Deals</a></li>
+                <li><a href="#">Mobiles & Tablets</a></li>
+                <li><a href="#">Fashion</a></li>
+                <li><a href="#">Electronics</a></li>
+                <li><a href="#">Health & Beauty</a></li>
+                <li><a href="#" class="nav-sale">⚡ Super Sale</a></li>
+                <% if (currentUser && currentUser.role === 'admin') { %>
+                    <li><a href="/sales" style="color: #f85606; font-weight: bold;">📊 Sales Dashboard</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+
+    <%- body %>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <span style="cursor:pointer;" onclick="window.location.href='/'">Customer Care</span> | 
+                <span style="cursor:pointer;" onclick="window.location.href='/contact'">Contact Us</span> | 
+                <span>Terms & Conditions</span> | 
+                <span>Privacy Policy</span>
+            </div>
+            <p>&copy; 2026 Daraz Online Shopping</p>
+        </div>
+    </footer>
+
+</body>
+</html>
